@@ -1,0 +1,144 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-Pop Quiz Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>K-Pop Quiz Game</h1>
+        <div id="quiz-container">
+            <p id="question"></p>
+            <div id="options"></div>
+        </div>
+        <button id="next-btn">Next</button>
+        <p id="score"></p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html><style>body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #ffb6c1;
+}
+
+.container {
+    width: 50%;
+    margin: auto;
+    margin-top: 50px;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px gray;
+}
+
+h1 {
+    color: #ff1493;
+}
+
+#quiz-container {
+    margin: 20px 0;
+}
+
+button {
+    background-color: #ff1493;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #ff69b4;
+}
+
+.option {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    width: 80%;
+    background: #fff0f5;
+    border: 2px solid #ff1493;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.option:hover {
+    background: #ff69b4;
+    color: white;
+}</style><script>const questions = [
+    {
+        question: "Which K-pop group debuted with the song 'No More Dream'?",
+        options: ["EXO", "BTS", "BLACKPINK", "TWICE"],
+        answer: "BTS"
+    },
+    {
+        question: "Which female K-pop group is known for the song 'DDU-DU DDU-DU'?",
+        options: ["BLACKPINK", "Red Velvet", "MAMAMOO", "GFRIEND"],
+        answer: "BLACKPINK"
+    },
+    {
+        question: "Who is the leader of EXO?",
+        options: ["Baekhyun", "Kai", "Suho", "Chanyeol"],
+        answer: "Suho"
+    },
+    {
+        question: "Who is the Maknae of TWICE?",
+        options: ["Nayeon", "Jihyo", "Tzuyu", "Momo"],
+        answer: "Tzuyu"
+    }
+];
+
+let currentQuestionIndex = 0;
+let score = 0;
+
+const questionElement = document.getElementById("question");
+const optionsElement = document.getElementById("options");
+const nextButton = document.getElementById("next-btn");
+const scoreElement = document.getElementById("score");
+
+function loadQuestion() {
+    const currentQuestion = questions[currentQuestionIndex];
+    questionElement.innerText = currentQuestion.question;
+    optionsElement.innerHTML = "";
+
+    currentQuestion.options.forEach(option => {
+        const button = document.createElement("button");
+        button.innerText = option;
+        button.classList.add("option");
+        button.addEventListener("click", () => checkAnswer(option));
+        optionsElement.appendChild(button);
+    });
+}
+
+function checkAnswer(selectedOption) {
+    const correctAnswer = questions[currentQuestionIndex].answer;
+    if (selectedOption === correctAnswer) {
+        score++;
+    }
+    currentQuestionIndex++;
+
+    if (currentQuestionIndex < questions.length) {
+        loadQuestion();
+    } else {
+        showScore();
+    }
+}
+
+function showScore() {
+    questionElement.innerText = `Game Over!`;
+    optionsElement.innerHTML = `Your Score: ${score}/${questions.length}`;
+    nextButton.style.display = "none";
+}
+
+nextButton.addEventListener("click", () => {
+    if (currentQuestionIndex < questions.length) {
+        loadQuestion();
+    }
+});
+
+loadQuestion();</script>
